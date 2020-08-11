@@ -1,0 +1,193 @@
+<div id="pcoded" (window:resize)="onResize($event)" class="pcoded iscollapsed" theme-layout="vertical"
+  vertical-placement="left" vertical-layout="wide" [attr.pcoded-device-type]="deviceType"
+  [attr.vertical-nav-type]="verticalNavType" [attr.vertical-effect]="verticalEffect" vnavigation-view="view1">
+  <div class="pcoded-overlay-box"></div>
+  <div class="pcoded-container navbar-wrapper">
+    <nav class="navbar header-navbar pcoded-header" header-theme="theme4" pcoded-header-position="fixed">
+      <div class="navbar-wrapper">
+        <div class="navbar-logo" navbar-theme="theme4">
+          <a class="mobile-menu" id="mobile-collapse" href="javascript:;" (click)="toggleOpened()"
+            [exclude]="'#main_navbar'" (clickOutside)="onClickedOutside($event)">
+            <i class="ti-menu"></i>
+          </a>
+          <a [routerLink]="['/']">
+            <img class="img-fluid" src="assets/sidemenu.png" alt="Theme-Logo" />
+          </a>
+          <a (click)="onMobileMenu()" class="mobile-options">
+            <i class="ti-more"></i>
+          </a>
+        </div>
+
+        <div class="navbar-container">
+          <div>
+            <ul class="nav-left">
+              <li>
+                <div class="sidebar_toggle"><a href="javascript:;" (click)="toggleOpened()"><i
+                      class="ti-menu f-18"></i></a></div>
+              </li>
+            </ul>
+            <ul [@mobileMenuTop]="isCollapsedMobile" class="nav-right" [ngClass]="isCollapsedMobile">
+              <li class="header-notification lng-dropdown">
+
+                <a href="javascript:;" id="dropdown-active-item">
+                  <i class="flag-icon flag-icon-gb m-r-5"></i> English
+                </a>
+                <ul class="show-notification">
+                  <li>
+                    <a (click)="changeLng('en')" data-lng="en">
+                      <i class="flag-icon flag-icon-gb m-r-5"></i> English
+                    </a>
+                  </li>
+                  <li>
+                    <a (click)="changeLng('spanish')" data-lng="es">
+                      <i class="flag-icon flag-icon-es m-r-5"></i> Spanish
+                    </a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="user-profile header-notification">
+                <a [routerLink]="['/']">
+                  <img src="assets/images/user.png" alt="User-Profile-Image">
+                  <span>Food Admin</span>
+                  <i class="ti-angle-down"></i>
+                </a>
+                <ul class="show-notification profile-notification">
+                  <li>
+                    <a (click)="logout()">
+                      <i class="ti-layout-sidebar-left"></i> {{'Logout' | translate}}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+    <!-- rightbar chat end-->
+    <div class="pcoded-main-container" style="margin-top: 56px;">
+      <div class="pcoded-wrapper">
+        <nav id="main_navbar" class=" pcoded-navbar" (clickOutside)="onClickedOutside($event)"
+          [exclude]="'#mobile-collapse'" navbar-theme="themelight1" active-item-theme="theme4" sub-item-theme="theme2"
+          active-item-style="style0" pcoded-navbar-position="fixed" pcoded-header-position="fixed">
+          <div class="sidebar_toggle"><a href="javascript:;"><i class="icon-close icons"></i></a></div>
+          <div class="pcoded-inner-navbar main-menu" appAccordion>
+            <perfect-scrollbar [style.max-width]="'100%'" [style.max-height]="'calc(100vh - 56px)'" [config]="config">
+              <div>
+                <div *ngFor="let asideItems of menuItems.getAll()">
+                  <div class="pcoded-navigatio-lavel" menu-title-theme="theme5">{{getName(asideItems.label)}} </div>
+                  <ul class="pcoded-item pcoded-left-item" item-border="none" item-border-style="solid"
+                    subitem-border="solid" *ngFor="let asideItem of asideItems.main" appAccordionLink
+                    group="{{asideItem.state}}">
+                    <li [routerLinkActive]="['active']" *ngIf="asideItem.type === 'external'" appAccordionLink
+                      group="{{asideItem.state}}">
+                      <a href="{{asideItem.external}}" target="{{asideItem.target ? '_blank' : '_self'}}"
+                        appAccordionToggle>
+                        <span class="pcoded-micon"><i class="{{ asideItem.icon }}"></i></span>
+                        <span class="pcoded-mtext">{{ asideItem.name }} </span>
+                        <span *ngFor="let asideBadge of asideItem.badge"
+                          class="pcoded-badge label label-{{ asideBadge.type }}">{{asideBadge.value}}</span>
+                        <span class="pcoded-mcaret"></span>
+                      </a>
+                    </li>
+
+                    <li [routerLinkActive]="['active']" *ngIf="asideItem.type === 'link'" appAccordionLink
+                      group="{{asideItem.state}}">
+                      <a [routerLink]="['/', asideItem.main_state, asideItem.state]"
+                        target="{{asideItem.target ? '_blank' : '_self'}}" appAccordionToggle
+                        *ngIf="asideItem.main_state; else: mainContent">
+                        <span class="pcoded-micon"><i class="{{ asideItem.icon }}"></i></span>
+                        <span class="pcoded-mtext">{{ asideItem.name }} </span>
+                        <span *ngFor="let asideBadge of asideItem.badge"
+                          class="pcoded-badge label label-{{ asideBadge.type }}">{{asideBadge.value}}</span>
+                        <span class="pcoded-mcaret"></span>
+                      </a>
+                      <ng-template #mainContent>
+                        <a [routerLink]="['/', asideItem.state]" target="{{asideItem.target ? '_blank' : '_self'}}"
+                          appAccordionToggle>
+                          <span class="pcoded-micon"><i class="{{ asideItem.icon }}"></i></span>
+                          <span class="pcoded-mtext">{{getName(asideItem.name)}} </span>
+                          <span *ngFor="let asideBadge of asideItem.badge"
+                            class="pcoded-badge label label-{{ asideBadge.type }}">{{asideBadge.value}}</span>
+                          <span class="pcoded-mcaret"></span>
+                        </a>
+                      </ng-template>
+                    </li>
+                    <li [routerLinkActive]="['active']" *ngIf="asideItem.type === 'sub'" class="pcoded-hasmenu"
+                      dropdown-icon="style1" subitem-icon="style6" appAccordionLink group="{{asideItem.state}}">
+                      <a [routerLinkActive]="['active']" href="javascript:;" appAccordionToggle>
+                        <span class="pcoded-micon"><i class="{{ asideItem.icon }}"></i></span>
+                        <span class="pcoded-mtext">{{ asideItem.name }} </span>
+                        <span *ngFor="let asideBadge of asideItem.badge"
+                          class="pcoded-badge label label-{{ asideBadge.type }}">{{asideBadge.value}}</span>
+                        <span class="pcoded-mcaret"></span>
+                      </a>
+                      <ul class="pcoded-submenu">
+                        <ng-template ngFor let-asideChildren [ngForOf]="asideItem.children">
+                          <li [routerLinkActive]="['active']" *ngIf="asideChildren.type !== 'sub'">
+                            <a [routerLink]="['/', asideItem.state, asideChildren.state]"
+                              target="{{asideChildren.target ? '_blank' : '_self'}}">
+                              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                              <span class="pcoded-mtext">{{ asideChildren.name }} </span>
+                              <span *ngFor="let asideChildrenBadge of asideChildren.badge"
+                                class="pcoded-badge label label-{{ asideChildrenBadge.type }}">{{asideChildrenBadge.value}}</span>
+                              <span class="pcoded-mcaret"></span>
+                            </a>
+                          </li>
+
+                          <li [routerLinkActive]="['active']" class="pcoded-hasmenu" dropdown-icon="style1"
+                            subitem-icon="style6" *ngIf="asideChildren.type === 'sub'" appAccordionLink
+                            group="sub-toggled">
+                            <a href="javascript:;" appAccordionToggle>
+                              <span class="pcoded-micon"><i class="ti-direction-alt"></i></span>
+                              <span class="pcoded-mtext">{{ asideChildren.name }}</span>
+                              <span *ngFor="let asideChildrenBadge of asideChildren.badge"
+                                class="pcoded-badge label label-{{ asideChildrenBadge.type }}">{{asideChildrenBadge.value}}</span>
+                              <span class="pcoded-mcaret"></span>
+                            </a>
+                            <ul class="pcoded-submenu">
+                              <ng-template ngFor let-asideChildrenSub [ngForOf]="asideChildren.children">
+                                <li [routerLinkActive]="['active']">
+                                  <a [routerLink]="['/', asideItem.state, asideChildren.state, asideChildrenSub.state]"
+                                    target="{{asideChildrenSub.target ? '_blank' : '_self'}}">
+                                    <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+                                    <span class="pcoded-mtext">{{ asideChildrenSub.name }}</span>
+                                    <span *ngFor="let asideChildrenSubBadge of asideChildrenSub.badge"
+                                      class="pcoded-badge label label-{{ asideChildrenSubBadge.type }}">{{asideChildrenSubBadge.value}}</span>
+                                    <span class="pcoded-mcaret"></span>
+                                  </a>
+                                </li>
+                              </ng-template>
+                            </ul>
+                          </li>
+                        </ng-template>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+        </nav>
+        <div class="pcoded-content">
+          <div class="pcoded-inner-content">
+            <div class="main-body">
+              <div class="page-wrapper">
+                <app-title></app-title>
+                <app-breadcrumbs></app-breadcrumbs>
+                <div class="page-body">
+                  <router-outlet>
+                    <app-spinner></app-spinner>
+                  </router-outlet>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

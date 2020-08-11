@@ -1,0 +1,111 @@
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+    <p style="font-size: 20px; color: #e74c3c">{{'Please wait...' | translate}}</p>
+</ngx-spinner>
+<div class="row">
+    <div class="col-sm-12">
+
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5>{{'All Drivers' | translate}} </h5>
+            </div>
+            <div class="card-body reset-table p-t-0">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{'Search' | translate}}</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control form-control-round"
+                            [placeholder]="('Search Driver' | translate) || '&nbsp;'"
+                            (input)="search($event.target.value)">
+                    </div>
+                    <div class="col-sm-4">
+                        <button style="float: right;" type="button" (click)="createNew()"
+                            class="btn btn-danger btn-round">{{'CREATE NEW' | translate}}</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-uppercase">
+                                <th>{{'Cover' | translate}}</th>
+                                <th>{{'Name' | translate}}</th>
+                                <th>{{'Email' | translate}}</th>
+                                <th>{{'Phone' | translate}}</th>
+                                <th>{{'Status' | translate}}</th>
+                                <th>{{'Action' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dummy">
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                        'border-radius': '5px',
+                                        height: '10px',
+                                        border: '1px solid white'
+                                        }"></ngx-skeleton-loader>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let item of drivers;let i = index">
+                                <td><a href="javascript:;"><img class="img-responsive"
+                                            style="height: 40px;border-radius: 50%;" [src]="item.coverImage"
+                                            onError="this.src='assets/images/user.png'" alt="chat-user"></a>
+                                </td>
+                                <td>
+                                    <label style="font-weight: bold;"> {{item.fullname}} </label>
+
+                                </td>
+                                <td>
+                                    {{item.email}}
+                                </td>
+                                <td>
+                                    {{item.phone}}
+                                </td>
+                                <td><button type="button" (click)="changeStatus(item)"
+                                        [className]="getClass(item.status)">{{item.status}}</button>
+                                </td>
+                                <td><button type="button" (click)="openDriver(item)"
+                                        class="btn btn-success btn-round btn-outline-success">{{'View' | translate}}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

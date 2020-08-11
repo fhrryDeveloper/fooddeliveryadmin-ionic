@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/food-app-admin",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

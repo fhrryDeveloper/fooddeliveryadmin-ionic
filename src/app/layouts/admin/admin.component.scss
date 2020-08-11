@@ -1,0 +1,16 @@
+aside.pcoded-slider.ng-sidebar {
+  top: 56px;
+}
+
+.slimscroll-wrapper, .scroll-window {
+  width: 100% !important;
+}
+
+.userlist-box {
+  &.show {
+    display: -webkit-box;
+  }
+  &.hide {
+    display: none;
+  }
+}

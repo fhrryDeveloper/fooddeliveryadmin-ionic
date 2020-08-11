@@ -1,0 +1,93 @@
+<div class="row">
+    <div class="col-sm-12">
+
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5>{{'All Users' | translate}} </h5>
+            </div>
+            <div class="card-body reset-table p-t-0">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{'Search' | translate}}</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control form-control-round"
+                            [placeholder]="('Search User' | translate) || '&nbsp;'"
+                            (input)="search($event.target.value)">
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-uppercase">
+                                <th>{{'Cover' | translate}}</th>
+                                <th>{{'Name' | translate}}</th>
+                                <th>{{'Email' | translate}}</th>
+                                <th>{{'Status' | translate}}</th>
+                                <th>{{'Action'| translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dummy">
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let item of users;let i = index">
+                                <td><a href="javascript:;"><img class="img-responsive"
+                                            style="height: 40px;border-radius: 50%;" [src]="item.cover"
+                                            onError="this.src='assets/images/user.png'" alt="chat-user"></a>
+                                </td>
+                                <td>
+                                    <label style="font-weight: bold;"> {{item.fullname}} </label>
+
+                                </td>
+                                <td>
+                                    {{item.email}}
+                                </td>
+                                <td><button type="button" [className]="getClass(item.status)"
+                                        (click)="changeStatus(item)">{{item.status}}</button>
+                                </td>
+                                <td><button type="button" (click)="openUser(item)"
+                                        class="btn btn-success btn-round btn-outline-success">{{'View' | translate}}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

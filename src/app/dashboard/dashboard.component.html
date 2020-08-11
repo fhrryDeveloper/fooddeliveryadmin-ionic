@@ -1,0 +1,158 @@
+<div class="row">
+  <!-- counter-card-1 start-->
+  <div class="col-md-12 col-xl-4">
+    <app-card [cardClass]="'counter-card-1'" [blockClass]="'card-body-big'">
+      <div class="row">
+        <div class="col-6 counter-card-icon">
+          <i class="icofont icofont-chart-histogram"></i>
+        </div>
+        <div class="col-6  text-right">
+          <div class="counter-card-text">
+            <h3>{{orders.length}}</h3>
+            <p>{{'Orders' | translate}}</p>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- counter-card-1 end-->
+
+  <!-- counter-card-2 start -->
+  <div class="col-md-6 col-xl-4">
+    <app-card [cardClass]="'counter-card-2'" [blockClass]="'card-body-big'">
+      <div class="row">
+        <div class="col-6 counter-card-icon">
+          <i class="icofont icofont-chart-line-alt"></i>
+        </div>
+        <div class="col-6 text-right">
+          <div class="counter-card-text">
+            <h3>{{users.length}}</h3>
+            <p>{{'Users' | translate}}</p>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- counter-card-2 end -->
+
+  <!-- counter-card-3 start -->
+  <div class="col-md-6 col-xl-4">
+    <app-card [cardClass]="'counter-card-3'" [blockClass]="'card-body-big'">
+      <div class="row">
+        <div class="col-6 counter-card-icon">
+          <i class="icofont icofont-chart-line"></i>
+        </div>
+        <div class="col-6 text-right">
+          <div class="counter-card-text">
+            <h3>{{rest.length}}</h3>
+            <p>{{'Restaurants' | translate}}</p>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- counter-card-3 end -->
+
+
+  <!-- Reset Order Start -->
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5>{{'Recent 10 Order' | translate}}</h5>
+      </div>
+      <div class="card-body reset-table p-t-0">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="text-uppercase">
+                <th>{{'User' | translate}}</th>
+                <th>{{'User Name' | translate}}</th>
+                <th>{{'Restaurant' | translate}}</th>
+                <th>{{'Status' | translate}}</th>
+                <th>{{'Ordered on' | translate}}</th>
+                <th>{{'Total' | translate}}</th>
+                <th>{{'Quantity' | translate}}</th>
+                <th>{{'Action'| translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dummy">
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                    'border-radius': '5px',
+                    height: '10px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                        'border-radius': '5px',
+                        height: '10px',
+                        border: '1px solid white'
+                      }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                    'border-radius': '5px',
+                    height: '10px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                      'border-radius': '5px',
+                      height: '10px',
+                      border: '1px solid white'
+                    }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                      'border-radius': '5px',
+                      height: '10px',
+                      border: '1px solid white'
+                    }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                    'border-radius': '5px',
+                    height: '10px',
+                    border: '1px solid white'
+                  }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                      'border-radius': '5px',
+                      height: '10px',
+                      border: '1px solid white'
+                    }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                        'border-radius': '5px',
+                        height: '10px',
+                        border: '1px solid white'
+                      }"></ngx-skeleton-loader>
+                </td>
+              </tr>
+              <tr *ngFor="let item of displayOrders;let i = index">
+                <td><a href="javascript:;"><img class="img-responsive" style="height: 40px;border-radius: 50%;"
+                      [src]="item.uid.cover" onError="this.src='assets/images/user.png'" alt="chat-user"></a>
+                </td>
+                <td> {{item.uid.fullname}}</td>
+                <td>{{item.vid.name}}</td>
+                <td><button type="button" disabled [className]="getClass(item.status)">{{item.status}}</button></td>
+                <td>{{getDates(item.time)}}</td>
+                <td> {{getCurreny()}} {{item.grandTotal}}</td>
+                <td>{{item.order.length}}</td>
+                <td><button type="button" (click)="openOrder(item)"
+                    class="btn btn-success btn-round btn-outline-success">{{'View' | translate}}</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Reset Order End -->
+</div>

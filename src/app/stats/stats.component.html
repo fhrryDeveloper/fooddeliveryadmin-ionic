@@ -1,0 +1,112 @@
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+  <p style="font-size: 20px; color: #e74c3c">{{'Please wait...' | translate}}</p>
+</ngx-spinner>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5>{{'Get Stats' | translate}} </h5>
+      </div>
+      <div class="card-body reset-table p-t-0">
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <label>{{'Please select restaurants' | translate}}</label>
+            <select name="select" [(ngModel)]="restId" class="form-control">
+              <option *ngFor="let item of rest" [value]="item.id">{{item.name}}</option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <label>{{'From Date' | translate}} </label>
+            <input type="date" [(ngModel)]="from" class="form-control"
+              [placeholder]="('Expire Date' | translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-6">
+            <label>{{'To Date' | translate}} </label>
+            <input type="date" [(ngModel)]="to" class="form-control"
+              [placeholder]="('Expire Date' | translate) || '&nbsp;'">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <button class="btn btn-danger btn-round" (click)="getStats()">{{'Get Stats' | translate}}</button>
+            <button style="margin-left: 20px;" [useExistingCss]="true" [printTitle]="getName()"
+              printSectionId="print-section" ngxPrint *ngIf="restId && from && to && restOrder?.length"
+              class="btn btn-primary"><i class="icofont icofont-printer"></i>{{'Print' | translate}}</button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<h2 style="text-align: center;" *ngIf="restId && from && to && !restOrder?.length">{{'No Orders Found' | translate}}
+</h2>
+<div class="row" id="print-section" *ngIf="restId && from && to && restOrder?.length">
+  <div class="col-md-12">
+    <div class="card" style="padding: 20px;">
+      <h3 style="text-align: center;color: #7ec6aa;">Foodies Full App </h3>
+      <p style="text-align: center;color: #ED7669;">{{getDate(from)}} {{'to' | translate}} {{getDate(to)}}</p>
+      <p style="text-align: right;font-weight: bold;margin: 0px !important;color: #7EC6AA;">Foodies Full App</p>
+      <p style="text-align: right;font-weight: bold;margin: 0px !important;">Havamahel Palace Road Palitana, <br>
+        Bhavnagar
+        364270</p>
+      <p style="text-align: right;font-weight: bold;margin: 0px !important;">info@foodies.com</p>
+      <p style="text-align: right;font-weight: bold;margin: 0px !important;">9089882822</p>
+      <p style="text-align: left; font-weight: bold;margin: 0px;color: #7EC6AA;">{{restOrder[0].vid.name}}</p>
+      <p style="text-align: left; font-weight: bold;color: #7EC6AA;">{{today()}}</p>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr class="text-uppercase" style="color:#7ec6aa ;">
+              <th>Id</th>
+              <th>{{'Ordered on' | translate}}</th>
+              <th>{{'User Name' | translate}}</th>
+              <th>{{'Total' | translate}}</th>
+              <th>{{'Commission' | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of restOrder" style="background-color: #F5F8FA;">
+              <td>{{item.orderId}}</td>
+              <td>{{item.time}}</td>
+              <td> {{item.uid.fullname}}</td>
+
+              <td>{{getCurrency()}}{{item.total}}</td>
+              <td>{{getCurrency()}}{{getCommisions(item.total)}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="row" style="padding: 20px;">
+        <div class="col-sm-6"></div>
+        <div class="col-sm-4">
+          <p style="text-align: right;font-weight: bold;margin: 0px !important;color: #7EC6AA;;">
+            {{'Total' | translate}}</p>
+          <p style="text-align: right;font-weight: bold;margin: 0px !important;color: #7EC6AA;;">
+            {{'Commission' | translate}}
+          </p>
+          <p style="text-align: right;font-weight: bold;margin: 0px !important;color: #7EC6AA;;">
+            {{'Amount Pay' | translate}}
+          </p>
+        </div>
+        <div class="col-sm-2">
+          <p style="color: black !important;margin: 0px !important;text-align: right;">{{getCurrency()}} {{totalAmount}}
+          </p>
+          <p style="color: black !important; margin: 0px !important;text-align: right;">{{getCurrency()}}
+            {{commisionAmount}}
+          </p>
+          <p style="color: black !important;margin: 0px !important;text-align: right;">{{getCurrency()}} {{toPay}}</p>
+        </div>
+      </div>
+
+      <p style="font-size: .8rem;color: gray;">
+        {{'The invoice amount of' | translate}} {{getCurrency()}} {{toPay}} {{'will automatically be transferred to your account around five working days. We collect via the our customers. On behalf
+                of Foodies Your payments are processed by Stichting Soon. You can find our company name and contact informations in the
+                description on the statement' | translate}}.</p>
+    </div>
+  </div>
+</div>
+
+<ng2-toasty></ng2-toasty>

@@ -1,0 +1,100 @@
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+  <p style="font-size: 20px; color: #e74c3c">{{'Please wait...' | translate}}</p>
+</ngx-spinner>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5>{{'Order Details' | translate}}</h5>
+        <div class="orders">
+          <div class="card_div">
+
+            <div class="resto_detail">
+              <div class="back_image" [style.backgroundImage]="'url('+restCover+')'"></div>
+              <div style="margin-left: 20px;">
+                <p class="res_name">{{restName}}</p>
+                <p class="res_location">
+                  {{address}}
+                </p>
+              </div>
+
+              <div style="text-align: center;margin: 10px;">
+                <div class="ti-angle-double-right"></div>
+              </div>
+
+              <div class="back_image" [style.backgroundImage]="'url('+userpic+')'"></div>
+              <div style="margin-left: 20px;">
+                <p class="res_name">{{username}}</p>
+                <p class="res_location">
+                  {{userAddress}}
+                </p>
+              </div>
+            </div>
+
+            <div class="line_div"></div>
+
+            <div class="order_detail">
+              <p class="head_gray">{{'ITEMS' | translate}}</p>
+              <div class="small_lbl">
+                <!-- <span *ngFor="let order of orders;let ol = index">{{order.quantiy}}
+                                    X {{order.name}} </span> -->
+                <span *ngFor="let order of orders;let ol = index">
+                  <div *ngIf="!order.selectedItem || !order.selectedItem.length" class="border_bottom">
+                    {{order.name}} X {{order.quantiy}} <span *ngIf="ol !=order.length">,</span>
+                  </div>
+
+                  <div *ngFor="let subItems of order.selectedItem;let j = index" class="subNames">
+                    <p class="food_title">{{order.name}} X {{order.selectedItem[j].total}}</p>
+                    <div *ngFor="let addods of subItems.item" class="flex_titles">
+                      <p class="sub_name">
+                        - {{addods.name}}
+                      </p>
+                      <p class="sub_name">
+                        {{getCurrency()}} {{addods.value}}
+                      </p>
+                    </div>
+                  </div>
+                </span>
+              </div>
+              <p class="head_gray">{{'ORDERED ON'| translate}}</p>
+              <p class="small_lbl">{{getDate(time)}} </p>
+              <p class="head_gray" *ngIf="coupon">{{'Discount'| translate}}</p>
+              <p class="small_lbl" *ngIf="coupon">{{getCurrency()}} {{dicount}}
+              </p>
+              <p class="head_gray">{{'TOTAL AMOUNT'| translate}}</p>
+              <p class="small_lbl"> {{getCurrency()}} {{grandTotal}}</p>
+            </div>
+
+            <div class="line_div"></div>
+
+            <div class="status_detail" *ngIf="status =='completed' || status == 'delivered'">
+              <div class="deliver_div">
+                {{'Delivered' | translate}}
+              </div>
+            </div>
+            <div class="status_detail" *ngIf="status =='rejected' || status == 'cancel'">
+              <div class="deliver_div">
+                {{'Your Order is' | translate}} {{status}}
+              </div>
+            </div>
+            <div class="status_detail" *ngIf="status =='created' || status =='ongoing' || status === 'accepted'">
+              <div class="deliver_div">
+                {{'Your Order is' | translate}} {{status}}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-12" *ngIf="refund && status != 'rejected' && status != 'cancel'">
+          <button class="btn btn-danger btn-round" (click)="refundIt()">{{'Reject & Refund' | translate}}
+          </button>
+        </div>
+        <div class="col-sm-12" *ngIf="status =='created' || status =='ongoing' || status === 'accepted'">
+          <button class="btn btn-danger btn-round" (click)="reject()">{{'Reject' | translate}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng2-toasty></ng2-toasty>

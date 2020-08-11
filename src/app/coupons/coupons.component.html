@@ -1,0 +1,101 @@
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+    <p style="font-size: 20px; color: #e74c3c">{{'Please wait...' | translate}}</p>
+</ngx-spinner>
+<div class="row">
+    <div class="col-sm-12">
+
+    </div>
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5>{{'All Coupons' | translate}} </h5>
+            </div>
+            <div class="card-body reset-table p-t-0">
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">{{'Search'| translate}}</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control form-control-round"
+                            [placeholder]="('Search coupons' | translate) || '&nbsp;'"
+                            (input)="search($event.target.value)">
+                    </div>
+                    <div class="col-sm-4">
+                        <button type="button" (click)="createNew()"
+                            class="btn btn-danger btn-round">{{'CREATE NEW'| translate}}</button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-uppercase">
+                                <th>{{'COUPEN CODE' | translate}}</th>
+                                <th>{{'DISCOUNT' | translate}}</th>
+                                <th>{{'EXPIRE' | translate}}</th>
+                                <th>{{'Available On' | translate}}</th>
+                                <th>{{'ACTIONS' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of dummy">
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                    }"></ngx-skeleton-loader>
+                                </td>
+                                <td>
+                                    <ngx-skeleton-loader count="1" [theme]="{ 
+                                'border-radius': '5px',
+                                height: '10px',
+                                border: '1px solid white'
+                                }"></ngx-skeleton-loader>
+                                </td>
+                            </tr>
+                            <tr *ngFor="let item of list;let i = index">
+
+                                <td>
+                                    <label style="font-weight: bold;">
+                                        {{item.code}}
+                                    </label>
+                                </td>
+                                <td>
+                                    {{item.discout}}{{item.type}} OFF
+                                </td>
+                                <td>
+                                    {{getDate(item.expire)}}
+                                </td>
+                                <td>
+                                    {{item.available.length}}
+                                </td>
+                                <td><button type="button" (click)="open(item)"
+                                        class="btn btn-success btn-round btn-outline-success">{{item.status}}</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

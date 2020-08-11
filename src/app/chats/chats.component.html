@@ -1,0 +1,111 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5>{{'Support' | translate}} </h5>
+            </div>
+            <div class="card-body reset-table p-t-0">
+                <div class="form-group row" style="height: 60vh;border: 1px solid lightgray;">
+                    <div class="col-sm-4"
+                        style="height: 60vh;overflow: scroll;padding: 0px;border-right: 1px solid lightgray;">
+                        <input type="text" class="form-control form-control-round"
+                            [placeholder]="('Search' | translate) || '&nbsp;'" (input)="search($event.target.value)"
+                            style="margin: 10px 0px;">
+                        <div style="border-bottom: 1px solid lightgray;padding: 10px;margin: 10px;background: lightcoral;color: white;"
+                            *ngIf="selectedId">
+                            <div style="display:flex;">
+                                <img class="img-responsive" style="height: 40px;width:40px;border-radius: 50%;"
+                                    [src]="avtar" onError="this.src='assets/images/user.png'" alt="chat-user">
+                                <label style="margin-left: 10px;">{{name}} <br> <span
+                                        style="font-size:.6rem;color:white;">{{type}}</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div *ngFor="let item of users"
+                            style="border-bottom: 1px solid lightgray;padding: 10px;margin: 10px;"
+                            (click)="chatUser(item)" [id]="item.uid">
+                            <div style="display:flex;align-items: center;" *ngIf="item.type =='user'">
+                                <img class="img-responsive" style="height: 40px;width:40px;border-radius: 50%;"
+                                    [src]="item.cover" onError="this.src='assets/images/user.png'" alt="chat-user">
+                                <label style="margin-left: 10px;">{{item.fullname}} <br> <span
+                                        style="font-size:.6rem;color:gray;">{{'User' | translate}}</span> </label>
+                                <p *ngIf="item.count" style="background: #ff384c;
+                                color: white;
+                                height: 25px;
+                                width: 25px;
+                                text-align: center;
+                                margin-left: 10px;
+                                border-radius: 50%;">{{item.count}}</p>
+                            </div>
+                            <div style="display:flex;" *ngIf="item.type =='delivery'">
+                                <img class="img-responsive" style="height: 40px;width:40px;border-radius: 50%;"
+                                    [src]="item.coverImage" onError="this.src='assets/images/user.png'" alt="chat-user">
+                                <label style="margin-left: 10px;">{{item.fullname}} <br> <span
+                                        style="font-size:.6rem;color:gray;">{{'Drivers' | translate}}</span>
+                                </label>
+                                <p *ngIf="item.count" style="background: #ff384c;
+                                    color: white;
+                                    height: 25px;
+                                    width: 25px;
+                                    text-align: center;
+                                    margin-left: 10px;
+                                    border-radius: 50%;">
+                                    {{item.count}}</p>
+                            </div>
+                            <div style="display:flex;" *ngIf="item.type =='venue'">
+                                <img class="img-responsive" style="height: 40px;width:40px;border-radius: 50%;"
+                                    src="assets/images/user.png" onError="this.src='assets/images/user.png'"
+                                    alt="chat-user">
+                                <label style="margin-left: 10px;">{{item.fname}} {{item.lname}}
+                                    <br><span style="font-size:.6rem;color:gray;">{{'Restaurant' | translate}}</span>
+                                </label>
+                                <p *ngIf="item.count" style="background: #ff384c;
+                                    color: white;
+                                    height: 25px;
+                                    width: 25px;
+                                    text-align: center;
+                                    margin-left: 10px;
+                                    border-radius: 50%;">
+                                    {{item.count}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-sm-8" style="height: 60vh;overflow: scroll; position: relative;">
+                        <div class="lower_div" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+                            <span *ngFor="let msg of messages" #messages>
+                                <div class="main_div_right" *ngIf="msg.from == 'admin'">
+                                    <div class="msg_div">
+                                        <div class="inner_msg">
+                                            {{msg.msg}}
+                                        </div>
+                                    </div>
+                                    <div class="tri_right"></div>
+                                </div>
+
+                                <div class="main_div_left" *ngIf="msg.from != 'admin'">
+                                    <div class="msg_div">
+                                        <div class="inner_msg">
+                                            {{msg.msg}}
+                                        </div>
+                                    </div>
+                                    <div class="tri_left"></div>
+                                </div>
+                            </span>
+                        </div>
+                        <div style="position: absolute;bottom: 10px;width: 90%;display: flex;flex-direction: row;justify-content: space-between;align-items: center;"
+                            *ngIf="id">
+                            <input type="text" [(ngModel)]="message" class="form-control form-control-round"
+                                (keydown.enter)="send()" [placeholder]="('Send Message' | translate) || '&nbsp;'">
+                            <button style="margin-left: 10px;" (click)="send()" class="btn btn-danger btn-icon"><i
+                                    class="icofont icofont-location-arrow"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

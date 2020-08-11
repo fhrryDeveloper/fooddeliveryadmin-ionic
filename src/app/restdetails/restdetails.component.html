@@ -1,0 +1,242 @@
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+  <p style="font-size: 20px; color: #e74c3c">{{'Please wait...' | translate}}</p>
+</ngx-spinner>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <p style="color: red;font-size: 1.5rem;">
+          {{'Restaurants will be shown to users once restaurants add foods to his restaurant' | translate}}
+        </p>
+        <h5> <span *ngIf="new">{{'CREATE NEW' | translate}}</span> <span *ngIf="!new">{{'Edit'| translate}}</span>
+          {{'Restaurant'| translate}} </h5>
+      </div>
+      <div class="card-body reset-table p-t-0">
+        <h4 class="sub-title">{{'Owner Details' | translate}}</h4>
+        <div class="form-group row">
+          <div class="col-sm-6">
+            <label>{{'First Name' | translate}}</label>
+            <input type="text" [(ngModel)]="fname" class="form-control"
+              [placeholder]="('First Name' | translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-6">
+            <label>{{'Last Name' | translate}}</label>
+            <input type="text" [(ngModel)]="lname" class="form-control"
+              [placeholder]="('Last Name'| translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-6">
+            <label>{{'Email'| translate}}</label>
+            <input type="email" [disabled]="!new" [(ngModel)]="email" class="form-control"
+              [placeholder]="('Email'| translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-6" *ngIf="new">
+            <label>{{'Password'| translate}}</label>
+            <input type="password" [(ngModel)]="password" class="form-control"
+              [placeholder]="('Password'| translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-6">
+            <label>{{'Contact No' | translate}}</label>
+            <input type="number" [(ngModel)]="phone" class="form-control"
+              [placeholder]="('Contact No'| translate) || '&nbsp;'">
+          </div>
+        </div>
+
+
+        <h4 class="sub-title">{{'Restaurants Details'| translate}}</h4>
+        <div class="form-group row">
+          <div class="col-sm-6">
+            <label>{{'Restaurants Name'| translate}}</label>
+            <input type="text" [(ngModel)]="name" class="form-control"
+              [placeholder]="('Restaurants Name'| translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-6">
+            <label>{{'Select Cuisine'| translate}}</label>
+            <ng-multiselect-dropdown [placeholder]="('Select Cuisine'| translate) || '&nbsp;'" maxHeight="100"
+              [data]="dropdownList" [(ngModel)]="selectedItems" [settings]="dropdownSettings"
+              (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="col-sm-12">
+            <label>{{'Address'| translate}}</label>
+            <input type="text" [(ngModel)]="address" ngx-google-places-autocomplete #placesRef="ngx-places"
+              (onAddressChange)="handleAddressChange($event)" class="form-control"
+              [placeholder]="('Address'| translate) || '&nbsp;'">
+          </div>
+
+          <div class="col-sm-6">
+            <label>{{'Per Person Dish $'| translate}}</label>
+            <input [(ngModel)]="dishPrice" type="number" class="form-control" placeholder="Per Person Dish $">
+          </div>
+          <div class="col-sm-6">
+            <label>{{'Opening Time'| translate}}</label>
+            <input [(ngModel)]="openTime" type="time" class="form-control"
+              [placeholder]="('Opening Time'| translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-6">
+            <label>{{'Closing Time'| translate}}</label>
+            <input [(ngModel)]="closeTime" type="time" class="form-control"
+              [placeholder]="('Closing Time'| translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-6">
+            <label>{{'Estimated Delivery time'| translate}}</label>
+            <input [(ngModel)]="time" type="number" class="form-control"
+              [placeholder]="('Estimated Delivery time'| translate) || '&nbsp;'">
+          </div>
+          <div class="col-sm-12">
+            <label>{{'Restaurant Description'| translate}}</label>
+            <textarea [(ngModel)]="descritions" rows="5" cols="5" class="form-control"
+              [placeholder]="('Restaurant Description'| translate) || '&nbsp;'"></textarea>
+          </div>
+          <div class="col-sm-12">
+            <label>{{'Select city'| translate}}</label>
+            <select name="select" [(ngModel)]="city" class="form-control">
+              <option *ngFor="let item of cities" [value]="item.id">{{item.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">{{'Upload cover image here'| translate}}</label>
+          <div class="col-sm-4">
+            <input (change)="preview_banner($event.target.files)" type="file" class="form-control">
+          </div>
+          <div class="col-sm-4">
+            <img [src]="coverImage" alt="" style="height: 100px;width: 100px;float: right;"
+              onError="this.src='assets/icon.png'">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-12">
+            <button class="btn btn-danger btn-round" (click)="create()"
+              *ngIf="new">{{'Create New Restaurant'| translate}}
+            </button>
+            <button class="btn btn-danger btn-round" (click)="updateVenue()" *ngIf="!new">
+              {{'Update Restaurant'| translate}} </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="!new">
+  <div class="col-md-4">
+    <div class="card">
+      <div class="card-body-big card-status">
+        <h5>{{'Income Status'| translate}}</h5>
+        <div class="card-body text-center">
+          <h2 class="text-primary">{{'ORDERS' | translate}} : {{totalOrders.length}}</h2>
+        </div>
+        <div class="row">
+          <div class="col-6">
+            <p class="f-16 text-muted m-0">{{'Totale Income'| translate}} : {{getCurrency()}} {{totalSales}}</p>
+          </div>
+          <div class="col-6">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card">
+      <div class="card-body-big card-status">
+        <h5>{{'Orders & Reviews'| translate}}</h5>
+        <ngb-tabset>
+          <ngb-tab title="Orders">
+            <ng-template ngbTabContent>
+              <div class="orders">
+                <div class="card_div" *ngFor="let item of totalOrders">
+
+                  <div class="resto_detail">
+                    <div class="back_image" [style.backgroundImage]="'url('+getImage(item.uid.cover)+')'">
+                    </div>
+                    <div style="margin-left: 20px;display: flex;flex-direction: column;">
+                      <p class="res_name">{{item.uid.fullname}}</p>
+                      <p class="res_location">
+                        {{item.address.address}}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="line_div"></div>
+
+                  <div class="order_detail">
+                    <p class="head_gray">{{'ITEMS'| translate}}</p>
+                    <!-- <div class="small_lbl">
+                                            <span *ngFor="let order of item.order;let ol = index">{{order.quantiy}}
+                                                X {{order.name}} <span *ngIf="ol !=item.order.length">,</span></span>
+                                        </div> -->
+                    <div class="small_lbl">
+                      <span *ngFor="let order of item.order;let ol = index">
+                        <div *ngIf="!order.selectedItem || !order.selectedItem.length" class="border_bottom">
+                          {{order.name}} X {{order.quantiy}} <span *ngIf="ol !=item.order.length">,</span>
+                        </div>
+
+                        <div *ngFor="let subItems of order.selectedItem;let j = index" class="subNames">
+                          <p class="food_title">{{order.name}} X {{order.selectedItem[j].total}}</p>
+                          <div *ngFor="let addods of subItems.item" class="flex_titles">
+                            <p class="sub_name">
+                              - {{addods.name}}
+                            </p>
+                            <p class="sub_name">
+                              {{getCurrency()}} {{addods.value}}
+                            </p>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                    <p class="head_gray">{{'ORDERED ON'| translate}}</p>
+                    <p class="small_lbl">{{getDate(item.time)}} </p>
+                    <p class="head_gray" *ngIf="item.appliedCoupon">{{'Discount'| translate}}</p>
+                    <p class="small_lbl" *ngIf="item.appliedCoupon"> {{getCurrency()}} {{item.dicount}}
+                    </p>
+                    <p class="head_gray">{{'TOTAL AMOUNT'| translate}}</p>
+                    <p class="small_lbl"> {{getCurrency()}} {{item.grandTotal}}</p>
+                  </div>
+
+                  <div class="line_div"></div>
+
+                  <div class="status_detail" *ngIf="item.status =='completed' || item.status == 'delivered'">
+                    <div class="deliver_div">
+                      {{'Delivered'| translate}}
+                    </div>
+                  </div>
+                  <div class="status_detail" *ngIf="item.status =='rejected' || item.status == 'cancel'">
+                    <div class="deliver_div">
+                      {{'Your Order is'| translate}} {{item.status}}
+                    </div>
+                  </div>
+                  <div class="status_detail"
+                    *ngIf="item.status =='created' || item.status =='ongoing' || item.status === 'accepted'">
+                    <div class="deliver_div">
+                      {{'Your Order is'| translate}} {{item.status}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab title="Reviews">
+            <ng-template ngbTabContent>
+              <div class="review">
+                <div class="row" *ngFor="let item of reviews" style="border-bottom: 1px solid lightgray;padding: 10px;">
+                  <div class="col-md-2">
+                    <img height="100" width="100" src="{{item.cover}}" alt="" onError="this.src='assets/icon.png'">
+                  </div>
+                  <div class="col-md-10">
+                    <p style="font-weight: bold;"> {{item.uid.fullname}}</p>
+                    {{item.descriptions}}
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng2-toasty></ng2-toasty>

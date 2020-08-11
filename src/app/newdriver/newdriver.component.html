@@ -1,0 +1,61 @@
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+    <p style="font-size: 20px; color: #e74c3c">{{'Please wait...' | translate}}</p>
+</ngx-spinner>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5> <span *ngIf="new">{{'CREATE NEW' | translate}}</span> <span
+                        *ngIf="!new">{{'Edit' | translate}}</span> {{'Restaurant' | translate}} </h5>
+            </div>
+            <div class="card-body reset-table p-t-0">
+                <h4 class="sub-title">Owner Details</h4>
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <label>{{'Full Name' | translate}}</label>
+                        <input type="text" [(ngModel)]="fullname" class="form-control"
+                            [placeholder]="('Full Name' | translate) || '&nbsp;'  ">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label>{{'Email' | translate}}</label>
+                        <input type="email" [disabled]="!new" [(ngModel)]="email" class="form-control"
+                            [placeholder]="('Email' | translate) || '&nbsp;'">
+                    </div>
+                    <div class="col-sm-6" *ngIf="new">
+                        <label>{{'Password' | translate}}</label>
+                        <input type="password" [(ngModel)]="password" class="form-control"
+                            [placeholder]="('Password' | translate) || '&nbsp;'">
+                    </div>
+                    <div class="col-sm-6">
+                        <label>{{'Contact No' | translate}}</label>
+                        <input type="number" [(ngModel)]="phone" class="form-control"
+                            [placeholder]="('Contact No'| translate) ||'&nbsp;'">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">{{'Upload cover image here' | translate}}</label>
+                    <div class="col-sm-4">
+                        <input (change)="preview_banner($event.target.files)" type="file" class="form-control">
+                    </div>
+                    <div class="col-sm-4">
+                        <img [src]="coverImage" alt="" style="height: 100px;width: 100px;float: right;"
+                            onError="this.src='assets/icon.png'">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-danger btn-round" (click)="create()"
+                            *ngIf="new">{{'Add New Driver' | translate}}
+                        </button>
+                        <button class="btn btn-danger btn-round" (click)="update()" *ngIf="!new">
+                            {{'Update Driver' | translate}} </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng2-toasty></ng2-toasty>

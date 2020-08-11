@@ -1,0 +1,159 @@
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+  <p style="font-size: 20px; color: #e74c3c">{{'Please wait...' | translate}}</p>
+</ngx-spinner>
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5>{{'User Details'| translate}}</h5>
+      </div>
+      <div class="row">
+        <div class="col-xl-4">
+          <div class="user-card-body ">
+            <div class="card-body">
+              <div class="top-card text-center">
+                <img [src]="photo" style="height: 100px;width: 100px;border-radius: 50%;"
+                  onError="this.src='assets/icon.png'" class="img-responsive" alt="">
+              </div>
+              <div class="card-contain text-center p-t-40">
+                <h5 class="text-capitalize p-b-10">{{name}}</h5>
+                <p class="text-muted">{{email}}</p>
+              </div>
+              <div class="card-data">
+                <div class="row">
+
+                  <div class="col-4 b-r-default text-center">
+                    <p class="text-muted">{{'Orders' | translate}}</p>
+                    <span>{{myOrders.length}}</span>
+                  </div>
+                  <div class="col-4 b-r-default text-center">
+                    <p class="text-muted">{{'Address' | translate}}</p>
+                    <span>{{myaddress.length}}</span>
+                  </div>
+                  <div class="col-4 b-r-default text-center">
+                    <p class="text-muted">{{'Reviews' | translate}}</p>
+                    <span>{{reviews.length}}</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-8">
+          <div class="user-card-body">
+            <div class="card-body">
+              <ngb-tabset>
+                <ngb-tab title="Orders">
+                  <ng-template ngbTabContent>
+                    <div class="orders">
+                      <div class="card_div" *ngFor="let item of myOrders">
+
+                        <div class="resto_detail">
+                          <div class="back_image" [style.backgroundImage]="'url('+item.vid.cover+')'"></div>
+                          <div style="margin-left: 20px;">
+                            <p class="res_name">{{item.vid.name}}</p>
+                            <p class="res_location">
+                              {{item.vid.address}}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div class="line_div"></div>
+
+                        <div class="order_detail">
+                          <p class="head_gray">{{'ITEMS' | translate}}</p>
+                          <!-- <div class="small_lbl">
+                                                        <span
+                                                            *ngFor="let order of item.order;let ol = index">{{order.quantiy}}
+                                                            X {{order.name}} <span
+                                                                *ngIf="ol !=item.order.length">,</span></span>
+                                                    </div> -->
+                          <div class="small_lbl">
+                            <span *ngFor="let order of item.order;let ol = index">
+                              <div *ngIf="!order.selectedItem || !order.selectedItem.length" class="border_bottom">
+                                {{order.name}} X {{order.quantiy}} <span *ngIf="ol !=item.order.length">,</span>
+                              </div>
+
+                              <div *ngFor="let subItems of order.selectedItem;let j = index" class="subNames">
+                                <p class="food_title">{{order.name}} X {{order.selectedItem[j].total}}</p>
+                                <div *ngFor="let addods of subItems.item" class="flex_titles">
+                                  <p class="sub_name">
+                                    - {{addods.name}}
+                                  </p>
+                                  <p class="sub_name">
+                                    {{getCurrency()}} {{addods.value}}
+                                  </p>
+                                </div>
+                              </div>
+                            </span>
+                          </div>
+                          <p class="head_gray">{{'ORDERED ON' | translate}}</p>
+                          <p class="small_lbl">{{getDate(item.time)}} </p>
+                          <p class="head_gray" *ngIf="item.appliedCoupon">
+                            {{'Discount'| translate}}</p>
+                          <p class="small_lbl" *ngIf="item.appliedCoupon">{{getCurrency()}}{{item.dicount}}
+                          </p>
+                          <p class="head_gray">{{'TOTAL AMOUNT' | translate}}</p>
+                          <p class="small_lbl">{{getCurrency()}}{{item.grandTotal}}</p>
+                        </div>
+
+                        <div class="line_div"></div>
+
+                        <div class="status_detail" *ngIf="item.status =='completed' || item.status == 'delivered'">
+                          <div class="deliver_div">
+                            {{'Delivered' | translate}}
+                          </div>
+                        </div>
+                        <div class="status_detail" *ngIf="item.status =='rejected' || item.status == 'cancel'">
+                          <div class="deliver_div">
+                            {{'Your Order is' | translate}} {{item.status}}
+                          </div>
+                        </div>
+                        <div class="status_detail"
+                          *ngIf="item.status =='created' || item.status =='ongoing' || item.status === 'accepted'">
+                          <div class="deliver_div">
+                            {{'Your Order is'| translate}} {{item.status}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Address">
+                  <ng-template ngbTabContent>
+                    <div class="address">
+                      <div class="list" *ngFor="let item of myaddress">
+                        <p class="title">{{item.title}}</p>
+                        <p class="name">{{item.house}} {{item.landmark}} {{item.address}}</p>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+                <ngb-tab title="Reviews">
+                  <ng-template ngbTabContent>
+                    <div class="review">
+                      <div class="row" *ngFor="let item of reviews"
+                        style="border-bottom: 1px solid lightgray;padding: 10px;">
+                        <div class="col-md-2">
+                          <img height="100" width="100" src="{{item.cover}}" alt=""
+                            onError="this.src='assets/icon.png'">
+                        </div>
+                        <div class="col-md-10">
+                          <p style="font-weight: bold;"> {{item.vid.name}}</p>
+                          {{item.descriptions}}
+                        </div>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ngb-tab>
+              </ngb-tabset>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End-->
+
+    </div>
+  </div>
+</div>

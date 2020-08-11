@@ -1,0 +1,21 @@
+<div class="card {{ fullCard }}" [@cardClose]="cardClose" [ngClass]="cardClass">
+  <div class="card-header" *ngIf="title">
+    <h5>{{ title }}</h5>
+    <span *ngIf="!classHeader">{{ headerContent }}</span>
+    <span *ngIf="classHeader">
+      <ng-content select=".code-header"></ng-content>
+    </span>
+    <div class="card-header-right">
+      <i class="icofont icofont-rounded-down" cardToggleEvent (click)="toggleCard()"></i>
+      <i class="fa {{ fullCardIcon }} full-card" (click)="fullScreen($event)"></i>
+      <i class="icofont icofont-refresh" cardRefresh></i>
+      <i class="icofont icofont-close-circled" (click)="closeCard()"></i>
+    </div>
+  </div>
+
+  <div [@cardToggle]="cardToggle">
+    <div class="card-body" [ngClass]="blockClass">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

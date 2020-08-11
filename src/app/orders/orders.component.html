@@ -1,0 +1,118 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5>{{'All Order' | translate}}</h5>
+      </div>
+      <div class="card-body reset-table p-t-0">
+        <div class="form-group row">
+          <label class="col-sm-2 col-form-label">{{'Search' | translate}}</label>
+          <div class="col-sm-6">
+            <input type="text" class="form-control form-control-round"
+              [placeholder]="('Search Order By ID' | translate) || '&nbsp;'" (input)="search($event.target.value)">
+          </div>
+
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr class="text-uppercase">
+                <th>ID</th>
+                <th>{{'User' | translate}}</th>
+                <th>{{'User Name' | translate}}</th>
+                <th>{{'Restaurant' | translate}}</th>
+                <th>{{'Ordered on' | translate}}</th>
+                <th>{{'Status' | translate}}</th>
+                <th>{{'Total' | translate}}</th>
+                <th>{{'Quantity' | translate}}</th>
+                <th>{{'Actions' | translate}}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dummy">
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                        'border-radius': '5px',
+                        height: '10px',
+                        border: '1px solid white'
+                      }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                            'border-radius': '5px',
+                            height: '10px',
+                            border: '1px solid white'
+                        }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                            'border-radius': '5px',
+                            height: '10px',
+                            border: '1px solid white'
+                          }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                        'border-radius': '5px',
+                        height: '10px',
+                        border: '1px solid white'
+                      }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                          'border-radius': '5px',
+                          height: '10px',
+                          border: '1px solid white'
+                        }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                          'border-radius': '5px',
+                          height: '10px',
+                          border: '1px solid white'
+                        }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                        'border-radius': '5px',
+                        height: '10px',
+                        border: '1px solid white'
+                      }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                          'border-radius': '5px',
+                          height: '10px',
+                          border: '1px solid white'
+                        }"></ngx-skeleton-loader>
+                </td>
+                <td>
+                  <ngx-skeleton-loader count="1" [theme]="{
+                                    'border-radius': '5px',
+                                    height: '10px',
+                                    border: '1px solid white'
+                                }"></ngx-skeleton-loader>
+                </td>
+              </tr>
+              <tr *ngFor="let item of orders;let i = index">
+                <td>{{item.id}}</td>
+                <td><a href="javascript:;"><img class="img-responsive" style="height: 40px;border-radius: 50%;"
+                      [src]="item.uid.cover" onError="this.src='assets/images/user.png'" alt="chat-user"></a>
+                </td>
+                <td> {{item.uid.fullname}}</td>
+                <td>{{item.vid.name}}</td>
+                <td>{{getDates(item.time)}}</td>
+                <td><button type="button" disabled [className]="getClass(item.status)">{{item.status}}</button></td>
+                <td> {{getCurrency()}} {{item.grandTotal}}</td>
+                <td>{{item.order.length}}</td>
+                <td><button type="button" (click)="openOrder(item)"
+                    class="btn btn-success btn-round btn-outline-success">{{'View' | translate}}</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

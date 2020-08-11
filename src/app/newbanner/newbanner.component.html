@@ -1,0 +1,39 @@
+<ngx-spinner type="ball-pulse-sync" color="#e74c3c">
+    <p style="font-size: 20px; color: #e74c3c">{{'Please wait...' | translate}}</p>
+</ngx-spinner>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5>{{'Add Banner' | translate}} </h5>
+            </div>
+            <div class="card-body reset-table p-t-0">
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">{{'Upload cover image here' | translate}}</label>
+                    <div class="col-sm-4">
+                        <input (change)="preview_banner($event.target.files)" type="file" class="form-control">
+                    </div>
+                    <div class="col-sm-4">
+                        <img [src]="coverImage" alt="" style="height: 100px;width: 100px;float: right;"
+                            onError="this.src='assets/icon.png'">
+                    </div>
+                    <div class="col-sm-12">
+                        <label>{{'Please select restaurants' | translate}}</label>
+                        <select name="select" [(ngModel)]="restId" class="form-control">
+                            <option *ngFor="let item of rest" [value]="item.id">{{item.name}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-sm-12">
+                        <button class="btn btn-danger btn-round"
+                            (click)="create()">{{'Add Banner' | translate}}</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<ng2-toasty></ng2-toasty>

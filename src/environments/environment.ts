@@ -23,8 +23,8 @@ export const environment = {
     sk: "",
   },
   general: {
-    symbol: "$",
-    code: "USD",
+    symbol: "₱",
+    code: "PHP",
   },
 };
 

@@ -19,7 +19,7 @@ export const environment = {
     sk: "",
   },
   general: {
-    symbol: "₱",
-    code: "PHP",
+    symbol: "฿",
+    code: "THB",
   },
 };
